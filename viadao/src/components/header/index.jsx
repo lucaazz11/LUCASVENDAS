@@ -1,7 +1,36 @@
 import './header.css';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { FaAngleDown } from 'react-icons/fa';
+import { isLogged, doLogout, getUser } from '../../lib/authHandler';
+
 
 export default function Header() {
+    const { logged, user, setLogged, setUser } = useAuth();
+    const [menuOpen, setMenuOpen] = useState(false);
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        const checkLogin = () => {
+            const LoggedIn = isLogged();
+            setLogged(LoggedIn);
+            if (LoggedIn) {
+                const userData = getUser();
+                setUser(userData);
+            } else {
+                setUser(null);
+            }
+        }
+        
+        const handleLogout = () => {
+            doLogout();
+            setLogged(false);
+            setUser(null);
+            navigate('/signin');
+        }
+
+
     return (
         <header className='header'>
             {/* Logo ou título do site */}
@@ -23,7 +52,25 @@ export default function Header() {
                         </button>
                     </div>
                 </div>
+
+                <nav className='navbar'>
+                    <ul>
+                        {logged ?}
+                        <>
+                        <link to='/' classname ="anuncio">
+                        Meus Anúncios
+                        </link>
+                        </li>
+                        <li>
+                            <link to='/post-an-ad'
+                            classname = 'anunciarbtn'>
+                                postar um anúncio
+                            </link>
+                        </li>
+                       
         </header>
+
+        
 
     );
 }
