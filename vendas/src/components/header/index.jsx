@@ -89,7 +89,7 @@ export default function Header() {
                                     className='profileBtn'
                                     onClick={() => setMenuOpen(!menuOpen)}
                                 >
-                                    <img
+                                     <img
                                         src={user.photoURL}
                                         alt={user.name}
                                         className='profileImg'
